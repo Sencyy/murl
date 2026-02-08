@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+    <title>µrl</title>
+</head>
+<body>
+    <div class=".container main">
+
+        <h1 class="title is-1"><span>µ</span>RL</h1>
+        <form>
+            <input type="text" class="input" id="fullUrl" placeholder="Insert full URL here...">
+        </form>
+        <button class="button is-danger" type="submit" onclick="shrink()""/shrink">Shrink!</button>
+
+        
+    </div>
+    <div class="messages">
+        <article class="message is-success" id="success-message">
+            <div class="message-header">
+                <p>Shrunk!</p>
+                <button class="delete" onclick="resetMsg('success-message')"></button>
+            </div>
+            <div class="message-body">
+                Here is the shortened version of your URL:<br> <a id="shortUrl" href=""></a>
+            </div>
+        </article>
+    
+        <article class="message is-danger" id="error-message">
+            <div class="message-header">
+                <p>Error!</p>
+                <button class="delete" onclick="resetMsg('error-message')"></button>
+            </div>
+            <div class="message-body">
+                An error ocurred while shrinking the URL, please try again! 
+            </div>
+        </article>
+    </div>
+</body>
+</html>
