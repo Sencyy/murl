@@ -18,7 +18,7 @@ var DB_PATH string
 
 func shortenLink(w http.ResponseWriter, req *http.Request) {
 	longURL := req.FormValue("url")
-	host := req.Header.Get("Host")
+	host := req.Host
 
 	g, err := rword.NewWithDict("./dict")
 	if err != nil {
