@@ -28,13 +28,13 @@ func shortenLink(w http.ResponseWriter, req *http.Request) {
 	}
 	shortLink := g.Word()
 
-	err = DB_storeLink(longURL, shortLink)
+	err = DB_storeLink(DB_PATH, longURL, shortLink)
 	if err != nil {
 		fmt.Printf("ERROR: %s", err)
 
 		for err.Error() == "UNIQUE constraint failed: links.shorturl" { // Keep trying a new word until it finds an unused one
 			shortLink = g.Word()
-			err = DB_storeLink(longURL, shortLink)
+			err = DB_storeLink(DB_PATH, longURL, shortLink)
 		}
 	}
 
@@ -47,6 +47,16 @@ func shortenLink(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, `{ "success": true, "shortUrl": "%s" }`, fmt.Sprintf("https://%s/%s", host, shortLink))
 }
 
+func linkRedirect(w http.ResponseWriter, req *http.Request) {
+	shortLink := req.PathValue("short")
+
+	long, err := DB_getMatchingUrl(DB_PATH, shortLink)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Printf("ERROR: %s", err)
+	}
+	http.Redirect(w, req, long, http.StatusSeeOther)
+}
 func main() {
 	SERVER_PORT = os.Getenv("MURL_SERVER_PORT")
 	if path := os.Getenv("MURL_DB_PATH"); path == "" {
@@ -59,5 +69,6 @@ func main() {
 
 	fmt.Println("Listening on port 8080")
 	http.HandleFunc("/shrink", shortenLink)
+	http.HandleFunc("/{short}", linkRedirect)
 	http.ListenAndServe(":8080", nil)
 }

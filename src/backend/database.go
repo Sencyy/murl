@@ -8,7 +8,7 @@ import (
 )
 
 func DB_init(dbPath string) error {
-	db, err := sql.Open("sqlite3", "./database.db")
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		return err
 	}
@@ -18,8 +18,8 @@ func DB_init(dbPath string) error {
 	return nil
 }
 
-func DB_storeLink(longURL string, shortName string) error {
-	db, err := sql.Open("sqlite3", "./database.db")
+func DB_storeLink(dbPath string, longURL string, shortName string) error {
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		return err
 	}
@@ -30,4 +30,24 @@ func DB_storeLink(longURL string, shortName string) error {
 	_, err = db.Exec(insertSQL)
 	return err
 
+}
+
+func DB_getMatchingUrl(dbPath string, short string) (string, error) {
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		return "", err
+	}
+	defer db.Close()
+
+	getSQL := fmt.Sprintf("SELECT * FROM links WHERE shorturl = '%s';", short)
+	row := db.QueryRow(getSQL)
+
+	var longUrl string
+	var _short string
+	err = row.Scan(&longUrl, &_short)
+	if err != nil {
+		return "", err
+	}
+
+	return longUrl, nil
 }
