@@ -3,8 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="index.js"></script>
+    <script>
+        async function shrink() {
+    const fullURL = document.getElementById("fullUrl")
+    const errorMsg = document.getElementById("error-message")
+    const successMsg = document.getElementById("success-message")
+    const shortURLString = document.getElementById("shortUrl")
+    try {
+        const response = await fetch(`/shrink?${fullURL.value}`)
+        if (!response.ok) {
+            errorMsg.style.opacity = "100%"
+            throw new Error(`Error shrinking url! Got response '${response.status}' from server.`)
+        }
+
+        const result = await response.json()
+        if (!result.success) {
+            errorMsg.style.opacity = "100%"
+            throw new Error("Error shrinking url! Server response hasn't brought any success.")
+        }
+
+        successMsg.style.opacity = "100%"
+        shortURLString.textContent = window.location.host + '/' + result.shortUrl
+        shortURLString.href = window.location.origin + '/' + result.shortUrl
+
+    } catch (error) {
+        console.error(error.message)
+    }
+
+}
+
+function resetMsg(msgid) {
+    const msg = document.getElementById(msgid)
+    msg.style.opacity = "0%"
+}
+    </script>
+
+    <style>
+        @import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+
+        body {
+            display: grid;
+            place-items: center;
+        
+            height: 100vh;
+        }
+
+        span {
+            color: #fd8383;
+        }
+
+
+        .is-danger {
+            background-color: #fd8383;
+        }
+
+        #fullUrl {
+            border: 2px solid #fd8383;
+            width: 50vw;
+        
+        }
+
+        .messages {
+            height: 116px;
+            width: 350px;
+        }
+
+        .message {
+            position: absolute;
+        }
+
+        #success-message {
+            opacity: 0%;
+        }
+        #error-message {
+            opacity: 0%;
+        }
+
+        .main {
+        
+            height: 30vh;
+        
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+
     <title>µrl</title>
 </head>
 <body>

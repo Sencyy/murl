@@ -13,13 +13,22 @@
     packages.${system} = rec {
 			default = murl;
 
-			murl = pkgs.buildGoModule {
-				name = "murl";
-				src = ./src/backend;
-				vendorHash = null;
-				buildInputs = with pkgs; [];
-			};
+			murl = pkgs.stdenv.mkDerivation {
+				pname = "murl";
+				version = "1.0";
 
+				src = ./.;
+
+				nativeBuildInputs = with pkgs; [ # Build dependencies
+					gcc
+					make
+				];
+				buildInputs = with pkgs; [ # Runtime dependencies
+					stb
+				];
+
+				buildPhase = "make";
+			} 
     packages.x86_64-linux.default = self.packages.x86_64-linux.murl;
 
     };

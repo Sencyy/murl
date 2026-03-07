@@ -4,7 +4,7 @@ async function shrink() {
     const successMsg = document.getElementById("success-message")
     const shortURLString = document.getElementById("shortUrl")
     try {
-        const response = await fetch(`/shrink?url=${fullURL}`)
+        const response = await fetch(`http://127.0.0.1:6944/shrink?${fullURL.value}`)
         if (!response.ok) {
             errorMsg.style.opacity = "100%"
             throw new Error(`Error shrinking url! Got response '${response.status}' from server.`)
@@ -13,11 +13,12 @@ async function shrink() {
         const result = await response.json()
         if (!result.success) {
             errorMsg.style.opacity = "100%"
-            throw new Error("Error shrinking url! Server response hasn't brought success.")
+            throw new Error("Error shrinking url! Server response hasn't brought any success.")
         }
 
         successMsg.style.opacity = "100%"
-        shortURLString.textContent = result.shortUrl
+        shortURLString.textContent = window.location.host + '/' + result.shortUrl
+        shortURLString.href = window.location.origin + '/' + result.shortUrl
 
     } catch (error) {
         console.error(error.message)
