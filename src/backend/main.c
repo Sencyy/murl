@@ -14,21 +14,10 @@
 #define LISTEN_BACKLOG 10
 #define DEFAULT_MESSAGE "Hello, World!"
 
-#ifdef WE_ARE_ON_NIX
-
 #define DEFAULT_DICT_PATH "$out/contrib/dict"
 #define DEFAULT_FRONTEND_PATH "$out/frontend/index.html"
 #define DEFAULT_SHORTIES_PATH "$out/data/shorties"
 
-#endif
-
-#ifndef WE_ARE_ON_NIX
-
-#define DICT_PATH "../contrib/dict"
-#define FRONTEND_PATH "../frontend/index.html"
-#define SHORTIES_PATH "../data/shorties"
-
-#endif
 
 // Here we are defining messages for possible HTTP responses
 #define HTTP_400 "HTTP/1.1 400 Bad Request\n"
