@@ -4,7 +4,7 @@ mkdir -pv build/data
 mkdir -v build/bin
 
 cd src/backend
-cc -o murl main.c -DWE_ARE_ON_NIX
+cc -o murl main.c -Bstatic
 cd ../..
 
 cp -rv contrib build
