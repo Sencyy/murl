@@ -13,6 +13,7 @@
 // The number maximum of connections to be queued
 #define LISTEN_BACKLOG 10
 #define DEFAULT_MESSAGE "Hello, World!"
+
 #ifdef WE_ARE_ON_NIX
 
 #define DEFAULT_DICT_PATH "$out/contrib/dict"
@@ -28,6 +29,7 @@
 #define SHORTIES_PATH "../data/shorties"
 
 #endif
+
 // Here we are defining messages for possible HTTP responses
 #define HTTP_400 "HTTP/1.1 400 Bad Request\n"
 #define HTTP_200 "HTTP/1.1 200 OK\n"
@@ -35,6 +37,33 @@
 #define HTTP_301 "HTTP/1.1 301 Permanent Redirect\n"
 
 int main() {
+	// Getting environment variable
+	const char* env_dict_path 	  =		getenv("MURL_DICT_PATH");
+	const char* env_frontend_path = 	getenv("MURL_FRONTEND_PATH");
+	const char* env_shorties_path = 	getenv("MURL_SHORTIES_PATH");
+
+	char* DICT_PATH;
+	char* FRONTEND_PATH;
+	char* SHORTIES_PATH;
+
+	if (env_dict_path) {
+		DICT_PATH = env_dict_path;
+	} else {
+		DICT_PATH = DEFAULT_DICT_PATH;
+	}
+
+	if (env_frontend_path) {
+		FRONTEND_PATH = env_frontend_path;
+	} else {
+		FRONTEND_PATH = DEFAULT_FRONTEND_PATH;
+	}
+
+	if (env_shorties_path) {
+		SHORTIES_PATH = env_shorties_path;
+	} else {
+		SHORTIES_PATH = DEFAULT_SHORTIES_PATH;
+	}
+
 	// Reading dictionary of words (see dict.c)
 	printf("Loading dictionary... ");
 	Dictionary dict = dict_open(DICT_PATH);
