@@ -13,9 +13,6 @@
 // The number maximum of connections to be queued
 #define LISTEN_BACKLOG 10
 #define DEFAULT_MESSAGE "Hello, World!"
-#define DICT_PATH "contrib/dict"
-#define FRONTEND_PATH "frontend/index.html"
-#define SHORTIES_PATH "data/shorties"
 #ifdef WE_ARE_ON_NIX
 
 #define DEFAULT_DICT_PATH "$out/contrib/dict"
