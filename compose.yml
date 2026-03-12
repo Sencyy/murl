@@ -1,0 +1,5 @@
+services:
+  murl:
+    build: .
+    ports:
+      - 8080:6946
