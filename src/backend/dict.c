@@ -14,6 +14,11 @@ typedef struct Dictionary {
 Dictionary dict_open(char* filepath) {
 	FILE* dict_file = fopen(filepath, "r");
 
+	if (!dict_file) {
+		perror("Error reading dictionary file");
+		exit(1);
+	}
+
 	char** word_list = NULL;
 	char buffer[MAX_WORD_LENGTH];
 	size_t dict_length = 0;
