@@ -9,7 +9,7 @@
 #include "dict.c"
 #include "shorties.c"
 
-#define SERVER_PORT 6946
+#define DEFAULT_SERVER_PORT 6969
 // The number maximum of connections to be queued
 #define LISTEN_BACKLOG 10
 #define DEFAULT_MESSAGE "Hello, World!"
@@ -27,13 +27,17 @@
 
 int main() {
 	// Getting environment variable
+	// Getting environment variables
 	const char* env_dict_path 	  =		getenv("MURL_DICT_PATH");
 	const char* env_frontend_path = 	getenv("MURL_FRONTEND_PATH");
 	const char* env_shorties_path = 	getenv("MURL_SHORTIES_PATH");
+	const char* env_server_port	  =		getenv("MURL_SERVER_PORT");
 
+	// If the variables exist, we use them, if not we will use predefined values
 	char* DICT_PATH;
 	char* FRONTEND_PATH;
 	char* SHORTIES_PATH;
+	int SERVER_PORT;
 
 	if (env_dict_path) {
 		DICT_PATH = env_dict_path;
@@ -53,6 +57,12 @@ int main() {
 		SHORTIES_PATH = DEFAULT_SHORTIES_PATH;
 	}
 
+	if (env_server_port){
+		SERVER_PORT = atoi(env_server_port);
+	} else {
+		SERVER_PORT = DEFAULT_SERVER_PORT;
+	}
+	// ------------------------------------------------------------
 	// Reading dictionary of words (see dict.c)
 	printf("Loading dictionary... ");
 	Dictionary dict = dict_open(DICT_PATH);
