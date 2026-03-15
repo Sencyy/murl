@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <signal.h>
 #include "dict.c"
 #include "shorties.c"
 
@@ -25,13 +26,29 @@
 #define HTTP_404 "HTTP/1.1 404 Not Found\n"
 #define HTTP_301 "HTTP/1.1 301 Permanent Redirect\n"
 
+bool safe_to_close;
+
+void handle_termination() {
+	if (safe_to_close) {
+		exit(0);
+	}
+}
+
+
 int main() {
-	// Getting environment variable
+
+	// Run handle_sigint() whenever we receive a SIGINT signal
+	safe_to_close = true;
+	signal(SIGINT, handle_termination);
+	signal(SIGTERM, handle_termination);
+
 	// Getting environment variables
 	const char* env_dict_path 	  =		getenv("MURL_DICT_PATH");
 	const char* env_frontend_path = 	getenv("MURL_FRONTEND_PATH");
 	const char* env_shorties_path = 	getenv("MURL_SHORTIES_PATH");
 	const char* env_server_port	  =		getenv("MURL_SERVER_PORT");
+	// ----------------------------------------------------------------
+
 
 	// If the variables exist, we use them, if not we will use predefined values
 	char* DICT_PATH;
@@ -63,6 +80,8 @@ int main() {
 		SERVER_PORT = DEFAULT_SERVER_PORT;
 	}
 	// ------------------------------------------------------------
+	
+
 	// Reading dictionary of words (see dict.c)
 	printf("Loading dictionary... ");
 	Dictionary dict = dict_open(DICT_PATH);
@@ -108,9 +127,14 @@ int main() {
 //  --------------------------------------------------------------
 
 
+	printf("Listening on port %d\n", SERVER_PORT);
+
+
 	// The main application loop (that will handle every request)
 	while (true) {
 		int client_sock = accept(s, NULL, NULL);
+
+		safe_to_close = false;
 		
 	// Everything from here will run at every request
 		printf("Network request received\n");
@@ -203,6 +227,7 @@ int main() {
 		// send(client_sock, DEFAULT_MESSAGE, strlen(DEFAULT_MESSAGE), 0);
 
 		close(client_sock);
+		safe_to_close = true;
 	}
 	
 
