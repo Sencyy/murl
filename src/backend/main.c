@@ -14,9 +14,9 @@
 #define LISTEN_BACKLOG 10
 #define DEFAULT_MESSAGE "Hello, World!"
 
-#define DEFAULT_DICT_PATH "$out/contrib/dict"
-#define DEFAULT_FRONTEND_PATH "$out/frontend/index.html"
-#define DEFAULT_SHORTIES_PATH "$out/data/shorties"
+#define DEFAULT_DICT_PATH "contrib/dict"
+#define DEFAULT_FRONTEND_PATH "frontend/index.html"
+#define DEFAULT_SHORTIES_PATH "data/shorties"
 
 
 // Here we are defining messages for possible HTTP responses
