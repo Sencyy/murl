@@ -16,5 +16,5 @@ ENV MURL_DICT_PATH=/murl/contrib/dict
 ENV MURL_FRONTEND_PATH=/murl/frontend/index.html
 ENV MURL_SHORTIES_PATH=/murl/data/shorties
 
-EXPOSE 6946
+EXPOSE 6969
 CMD [ "/murl/bin/murl" ]
