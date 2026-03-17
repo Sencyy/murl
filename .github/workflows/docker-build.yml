@@ -26,4 +26,4 @@ jobs:
         run: docker login ghcr.io  -u Sencyy --password ${{secrets.PACKAGES_TOKEN}}
 
       - name: Publish image to ghcr
-        run: docker push ghcr.io/Sencyy/murl:latest
+        run: docker push ghcr.io/sencyy/murl:latest
