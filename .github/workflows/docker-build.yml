@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build the container image
-        run: docker build . --file Containerfile --tag ghcr.io/sencyy/murl:$(date +%s)
+        run: docker build . --file Containerfile --tag ghcr.io/sencyy/murl
 
       - name: Login to ghcr
         run: docker login ghcr.io  -u Sencyy --password ${{secrets.PACKAGES_TOKEN}}
