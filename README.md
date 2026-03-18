@@ -24,7 +24,8 @@ This will generate a `build` folder, which you can copy to wherever you want and
 
 `docker run ghcr.io/sencyy/murl -p 8080:6969 -d`
 
-> [!TIP] Add `/murl/data` as a persistent storage if you want your links to be persisted.
+> ![TIP]
+>  Add `/murl/data` as a persistent storage if you want your links to be persisted.
 
 
 
