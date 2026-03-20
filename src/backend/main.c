@@ -56,29 +56,18 @@ int main() {
 	char* SHORTIES_PATH;
 	int SERVER_PORT;
 
-	if (env_dict_path) {
-		DICT_PATH = env_dict_path;
-	} else {
-		DICT_PATH = DEFAULT_DICT_PATH;
-	}
+	if (env_dict_path) DICT_PATH = env_dict_path;
+	else DICT_PATH = DEFAULT_DICT_PATH;
 
-	if (env_frontend_path) {
-		FRONTEND_PATH = env_frontend_path;
-	} else {
-		FRONTEND_PATH = DEFAULT_FRONTEND_PATH;
-	}
+	if (env_frontend_path) FRONTEND_PATH = env_frontend_path;
+	else FRONTEND_PATH = DEFAULT_FRONTEND_PATH;
+	
+	if (env_shorties_path) SHORTIES_PATH = env_shorties_path;
+	else SHORTIES_PATH = DEFAULT_SHORTIES_PATH;
 
-	if (env_shorties_path) {
-		SHORTIES_PATH = env_shorties_path;
-	} else {
-		SHORTIES_PATH = DEFAULT_SHORTIES_PATH;
-	}
+	if (env_server_port) SERVER_PORT = atoi(env_server_port);
+	else SERVER_PORT = DEFAULT_SERVER_PORT;
 
-	if (env_server_port){
-		SERVER_PORT = atoi(env_server_port);
-	} else {
-		SERVER_PORT = DEFAULT_SERVER_PORT;
-	}
 	// ------------------------------------------------------------
 	
 
