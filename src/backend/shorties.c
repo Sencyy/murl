@@ -1,18 +1,4 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <time.h>
-
-typedef struct Shortie {
-    char* short_name;
-    char* long_url;
-    time_t created_at;
-    time_t expires_at;
-} Shortie;
-
-
+#include "shorties.h"
 
 // This function creates the shorties file if it does not exist
 void shorties_init(char* shorties_path) {

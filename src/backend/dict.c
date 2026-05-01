@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-// #define _POSIX_C_SOURCE 199309L
-
-#define MAX_WORD_LENGTH 128 
-
-typedef struct Dictionary {
-	char** word_list;
-	size_t length;
-} Dictionary;
+#include "dict.h"
 
 Dictionary dict_open(char* filepath) {
 	FILE* dict_file = fopen(filepath, "r");

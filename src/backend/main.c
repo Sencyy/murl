@@ -7,8 +7,9 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <signal.h>
-#include "dict.c"
-#include "shorties.c"
+
+#include "dict.h"
+#include "shorties.h"
 
 #define DEFAULT_SERVER_PORT 6969
 // The number maximum of connections to be queued
